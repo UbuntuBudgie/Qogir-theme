@@ -824,6 +824,26 @@ window.background.csd {
         }
       }
     }
+
+    button.osd.remove-button {
+      padding: 0;
+      margin: 6px;
+      min-width: 24px;
+      min-height: 22px;
+      border: none;
+      background-color: rgba(black, 0.45);
+      color: rgba(white, 0.75);
+
+      &:hover {
+        background-color: rgba(black, 0.65);
+        color: white;
+      }
+
+      &:active {
+        background-color: rgba(black, 0.75);
+        color: white;
+      }
+    }
   }
 
   > leaflet > box.vertical > scrolledwindow.view, // > 3.38.0
@@ -925,13 +945,13 @@ button.osd.featured-button-right {
 
 label {
   &.title-1 {
-    color: white;
+    color: $fg_color;
   }
 
   &:backdrop.title-1 { opacity: 0.5; }
 
   &.caption {
-    color: rgba(white, 0.65);
+    color: rgba($fg_color, 0.65);
   }
 
   &:backdrop.caption { opacity: 0.5; }

@@ -12,7 +12,7 @@ $header_padding: if($titlebutton == 'circle', 0, 5px);
   -GtkWidget-text-handle-width: 20;
   -GtkWidget-text-handle-height: 20;
 
-  -GtkDialog-button-spacing: 4;
+  -GtkDialog-button-spacing: 6;
   -GtkDialog-action-area-border: 0;
 
   // We use the outline properties to signal the focus properties
@@ -111,7 +111,7 @@ rubberband,
 }
 
 flowbox {
-  rubberband { @extend rubberband }
+  rubberband { @extend rubberband; }
 
   flowboxchild {
     padding: 3px;
@@ -351,7 +351,7 @@ button {
 
   separator { margin: 4px 1px; }
 
-  @at-root %flat_button, &.flat {
+  &.flat {
     @include button(undecorated);
     // to avoid adiacent buttons borders clashing when transitioning, the transition on the normal state is set
     // to none, while it's added back in the hover state, so the button decoration will fade in on hover, but
@@ -1243,7 +1243,7 @@ headerbar {
     padding-left: $cont_padding * 2;
     padding-right: $cont_padding * 2;
     margin-top: -3px;
-    @extend .dim-label;
+    color: transparentize($header_fg, 0.65);
   }
 
   // Selectionmode
@@ -3423,9 +3423,9 @@ placessidebar {
       margin-top: 2px;
       margin-bottom: 2px;
       padding: 0;
-      @extend %flat_button;
       border-radius: 100%;
       -gtk-outline-radius: 100%;
+      @include button(undecorated);
 
       &:not(:hover):not(:active) > image { opacity: 0.5 };
     }
