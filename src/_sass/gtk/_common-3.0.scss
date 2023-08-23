@@ -700,7 +700,7 @@ toolbar.inline-toolbar toolbutton {
     > button:checked + #{$_uncolored_button}:disabled,
     > button.suggested-action + #{$_uncolored_button}:disabled,
     > button.destructive-action + #{$_uncolored_button}:disabled,
-    > entry + #{$_uncolored_button}:disabled:not(:only-child), { box-shadow: none; }
+    > entry + #{$_uncolored_button}:disabled:not(:only-child) { box-shadow: none; }
 
     @if $vert=='true' {
       > #{$_uncolored_button}:last-child:disabled,
@@ -761,7 +761,7 @@ toolbar.inline-toolbar toolbutton {
     > button:checked + #{$_uncolored_button}:disabled,
     > button.suggested-action + #{$_uncolored_button}:disabled,
     > button.destructive-action + #{$_uncolored_button}:disabled,
-    > entry + #{$_uncolored_button}:disabled:not(:only-child), { box-shadow: inset if($vert=='false', 1px 0, 0 1px) $b_border; }
+    > entry + #{$_uncolored_button}:disabled:not(:only-child) { box-shadow: inset if($vert=='false', 1px 0, 0 1px) $b_border; }
 
     > button:active + #{$_uncolored_button}:hover,
     > button:checked + #{$_uncolored_button}:hover,
@@ -1884,16 +1884,12 @@ treeview.view {
 
   acceleditor > label { background-color: $selected_bg_color; }
 
-  .background:not(.csd) &:not(:selected):not(.progressbar):not(.expander):not(.trough):not(.separator):hover { background-color: if($variant == 'light', mix(black, $base_color, 8%), mix(white, $base_color, 6%)); }
-
   &:selected {
-    &, &:focus {
-      border-radius: 0;
-      border-left-color: mix($selected_fg_color, $selected_bg_color, 50%);
-      border-top-color: transparentize($fg_color, 0.9);   // doesn't work unfortunately
+    border-radius: 0;
+    border-left-color: mix($selected_fg_color, $selected_bg_color, 50%);
+    border-top-color: transparentize($fg_color, 0.9);   // doesn't work unfortunately
 
-      @extend %selected_items;
-    }
+    &, &:focus, &:backdrop { @extend %selected_items; }
   }
 
   &:disabled {
@@ -2143,14 +2139,14 @@ menu,
     // border: 1px solid $borders_color;
 
     &.top {
-      margin-top: -4px;
+      margin-top: -6px;
       border-bottom: 1px solid $borders_color;
       -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
     }
 
     &.bottom {
-      margin-top: 8px;
-      margin-bottom: -12px;
+      margin-top: 12px;
+      margin-bottom: -18px;
       border-top: 1px solid $borders_color;
       -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
     }
@@ -3307,6 +3303,12 @@ messagedialog { // Message Dialog styling
       border-bottom-right-radius: $material_radius;
       border: none;
     }
+  }
+}
+
+.aboutdialog {
+  &.background.csd {
+    border-radius: 0 0 $corner_radius $corner_radius;
   }
 }
 

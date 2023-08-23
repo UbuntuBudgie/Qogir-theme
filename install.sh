@@ -28,7 +28,9 @@ SASSC_OPT="-M -t expanded"
 if [[ "$(command -v gnome-shell)" ]]; then
   gnome-shell --version
   SHELL_VERSION="$(gnome-shell --version | cut -d ' ' -f 3 | cut -d . -f -1)"
-  if [[ "${SHELL_VERSION:-}" -ge "42" ]]; then
+  if [[ "${SHELL_VERSION:-}" -ge "44" ]]; then
+    GS_VERSION="44-0"
+  elif [[ "${SHELL_VERSION:-}" -ge "42" ]]; then
     GS_VERSION="42-0"
   elif [[ "${SHELL_VERSION:-}" -ge "40" ]]; then
     GS_VERSION="40-0"
@@ -37,7 +39,7 @@ if [[ "$(command -v gnome-shell)" ]]; then
   fi
   else
     echo "'gnome-shell' not found, using styles for last gnome-shell version available."
-    GS_VERSION="42-0"
+    GS_VERSION="44-0"
 fi
 
 usage() {
@@ -102,7 +104,7 @@ install() {
   echo "[X-GNOME-Metatheme]"                                                      >> ${THEME_DIR}/index.theme
   echo "GtkTheme=${name}${theme}${color}"                                         >> ${THEME_DIR}/index.theme
   echo "MetacityTheme=${name}${theme}${color}"                                    >> ${THEME_DIR}/index.theme
-  echo "IconTheme=${name}${theme}${ELSE_DARK}"                                    >> ${THEME_DIR}/index.theme
+  echo "IconTheme=${name}${theme,,}${ELSE_DARK,,}"                                >> ${THEME_DIR}/index.theme
   echo "CursorTheme=Adwaita"                                                      >> ${THEME_DIR}/index.theme
   echo "ButtonLayout=menu:minimize,maximize,close"                                >> ${THEME_DIR}/index.theme
 
@@ -434,7 +436,7 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     -l|--libadwaita)
-      libadwaita="true"
+      libadwaita='true'
       shift
       ;;
     -r|--remove|-u|--uninstall)
@@ -722,9 +724,9 @@ uninstall_theme() {
 if [[ "${gdm:-}" != 'true' && "${remove:-}" != 'true' ]]; then
   install_theme
 
-   if [[ "$libadwaita" == 'true' ]]; then
-     uninstall_link && link_theme
-   fi
+  if [[ "$libadwaita" == 'true' ]]; then
+    uninstall_link && link_theme
+  fi
 fi
 
 if [[ "${gdm:-}" != 'true' && "${remove:-}" == 'true' ]]; then
@@ -741,6 +743,7 @@ if [[ "${gdm:-}" == 'true' && "${remove:-}" != 'true' && "$UID" -eq "$ROOT_UID" 
     echo -e 'Error: To install a gdm theme you can only select one color'
     exit 1
   fi
+
   if [[ "${#themes[@]}" -gt 1 ]]; then
     echo -e 'Error: To install a gdm theme you can only select one theme'
     exit 1
