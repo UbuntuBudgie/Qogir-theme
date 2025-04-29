@@ -90,14 +90,14 @@ button.gtkstyle-fallback { // For Cinnamon system setting
 
 textview {
   text {
-    @extend %view;
+    color: $text_color;
+    background-color: $base_color;
 
     selection { &:focus, & { @extend %selected_items; } }
   }
+
+  border { background-color: mix($bg_color, $base_color, 50%); }
 }
-
-
-textview border { background-color: mix($bg_color, $base_color, 50%); }
 
 iconview {
   @extend %view;
@@ -1305,11 +1305,29 @@ headerbar {
     }
   }
 
-  &.default-decoration,
-  &.default-decoration:backdrop {
+  &.default-decoration {
     background-color: $header_bg;
     border-bottom-width: 0;
     box-shadow: none;
+
+    &:backdrop {
+      background-color: $header_bg;
+    }
+
+    > button.titlebutton {
+      border: none;
+
+      @if $titlebutton == 'circle' {
+        min-height: 24px;
+        min-width: 24px;
+        padding: 0;
+        margin: 0 3px;
+      } @else {
+        min-width: $large_size;
+        min-height: 30px;
+        margin: 0 -3px;
+      }
+    }
 
     .tiled &,
     .maximized &,
@@ -2896,7 +2914,7 @@ progressbar {
 //
 levelbar {
   block {
-    min-width: 32px;
+    min-width: 0px;
     min-height: 1px;
   }
 
@@ -3622,14 +3640,22 @@ tooltip {
     // see https://bugzilla.gnome.org/show_bug.cgi?id=736155 for details.
     background-color: lighten($osd_bg_color, 10%);
     background-clip: padding-box;
+    border-radius: $material_radius;
 
     label { padding: 4px; }
   }
 
-  border-radius: $bt_radius;
+  &.background.csd {
+    border-radius: $material_radius;
+    box-shadow: 0 2px 3px rgba(black, 0.25);
+    margin: 0 6px 8px;
+  }
+
   box-shadow: none;
 
-  decoration { background-color: transparent; }
+  decoration {
+    background-color: transparent;
+  }
 
   * { //Yeah this is ugly
     background-color: transparent;

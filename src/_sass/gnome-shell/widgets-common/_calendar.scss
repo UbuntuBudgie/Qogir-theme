@@ -89,11 +89,20 @@
 
 .calendar-change-month-back,
 .calendar-change-month-forward {
-  padding: 0 1px !important;
+  width: 28px !important;
+  height: 28px !important;
+  padding: 2px !important;
+
+  &, &:focus, &:hover, &:active, &:checked {
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+  }
 
   StIcon { icon-size: 16px; }
 }
 
+.calendar-day,
 .calendar-day-base {
   font-size: 90%;
   text-align: center;
@@ -108,20 +117,33 @@
 
   &:hover, &:focus {
     background-color: $alt_bg_color;
-    box-shadow: none;
-    outline: none;
+    box-shadow: none !important;
+    outline: none !important;
   }
 
   &:active, &:checked, &:selected {
     color: $fg_color;
     background-color: $sec_bg_color;
     border: none;
+    box-shadow: none !important;
+    outline: none !important;
   }
 
   &.calendar-day-heading {  //day of week heading
     color: $alt_fg_color;
     margin-top: 1em;
     font-size: 80%;
+  }
+
+  &.calendar-weekday {}
+
+  &.calendar-weekend {
+    color: $insensitive_fg_color;
+  }
+
+  &.calendar-other-month {
+    color: $insensitive_fg_color !important;
+    font-weight: normal;
   }
 }
 
@@ -156,6 +178,8 @@
   color: $selected_fg_color;
   background-color: $selected_bg_color;
   border: none;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 .calendar-day-with-events {
